@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Data Analysis</title>
+  <style>
+    /* CSS styles for the charts */
+    .chart {
+      width: 500px;
+      height: 300px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Data Analysis</h1>
+
+  <div id="polygonChart" class="chart"></div>
+  <div id="histogramChart" class="chart"></div>
+  <div id="cumulativeChart" class="chart"></div>
+
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script>
+    // JavaScript code for data analysis
+    // Replace this code with your actual data analysis code
+
+    // Read the data from the CSV file
+    Plotly.d3.csv('Bitcoin.csv', function (data) {
+      // Convert the 'High' column to numeric values
+      data.forEach(function (d) {
+        d.High = +d.High;
+      });
+
+      // Filter the data to select 100 values with minimum volume of 1000
+      const filteredData = data.filter(function (d) {
+        return d.High >= 1000;
+      }).slice(0, 100);
+
+      // Sort the filtered data in ascending order
+      filteredData.sort(function (a, b) {
+        return a.High - b.High;
+      });
+
+      // Perform your data analysis calculations here
+      // ...
+
+      // Poligon chart
+      const xi_middle = [/* xi_middle values */];
+      const wi = [/* wi values */];
+
+      const polygonTrace = {
+        x: xi_middle,
+        y: wi,
+        mode: 'lines+markers',
+        type: 'scatter',
+        name: 'Poligon',
+      };
+
+      const polygonLayout = {
+        title: 'Полігон частот',
+        xaxis: {
+          title: 'Xі',
+        },
+        yaxis: {
+          title: 'W',
+        },
+      };
+
+      Plotly.newPlot('polygonChart', [polygonTrace], polygonLayout);
+
+      // Histogram chart
+      const rangeStart = [/* range_start values */];
+      const rangeEnd = [/* range_end values */];
+      const value = [/* value values */];
+
+      const histogramTrace = {
+        x: rangeStart,
+        y: value,
+        type: 'bar',
+        marker: {
+          color: 'blue',
+        },
+      };
+
+      const histogramLayout = {
+        title: 'Гістограма',
+        xaxis: {
+          title: 'Інтервали',
+        },
+        yaxis: {
+          title: 'Частота',
+        },
+      };
+
+      Plotly.newPlot('histogramChart', [histogramTrace], histogramLayout);
+
+      // Cumulative chart
+      const wi_accumulated = [/* wi_accumulated values */];
+
+      const cumulativeTrace = {
+        x: xi_middle,
+        y: wi_accumulated,
+        mode: 'lines',
+        type: 'scatter',
+        name: 'Кумулята',
+      };
+
+      const cumulativeLayout = {
+        title: 'Кумулята',
+        xaxis: {
+          title: 'Xі',
+        },
+        yaxis: {
+          title: 'Wнак',
+        },
+      };
+
+      Plotly.newPlot('cumulativeChart', [cumulativeTrace], cumulativeLayout);
+    });
+  </script>
+</body>
+</html>
+
